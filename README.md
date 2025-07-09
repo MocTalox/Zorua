@@ -47,7 +47,7 @@ Formula for Ultra Massive Zoruas
     - `zw = wn * 12.5`
   - If normal XXL (`1.5 <= hn <= 1.75`)
 	- `zh = hn * 0.7`
-    - `zw = max(1.75, wn) * 12.5`
+    - `zw = max(wn, hn) * 12.5`
   - If over XXL (`hn >= 1.75`)
 	- `zh = 1.225`
-    - `zw = max(1.75, wn - hn + 1.75) * 12.5`
+    - `zw = max(wn - hn + 1.75, 1.75) * 12.5`
