@@ -15,7 +15,7 @@ Formula for Ultra Massive Zoruas
 - `wn` - normalized wild buddy weight
   - `hn = h / bh`
   - `wn = w / bw`
-- `k` - mass index (shared between wild buddy and caught zorua)
+- `k` - mass index (shared between wild zorua/buddy and caught zorua)
 - `zhn` - normalized caught zorua height
 - `zwn` - normalized caught zorua weight
   - If XXL (`hn >= 1.5`)
@@ -25,7 +25,7 @@ Formula for Ultra Massive Zoruas
   - Otherwise (`hn < 1.5`)
     - `k = wn - hn^2`
     - `zhn = max(hn, 0.49)`
-    - `zwn =     k + zhn^2`
+    - `zwn = k + zhn^2`
 - `zh` - caught zorua height
 - `zw` - caught zorua weight
   - `zh = zhn * 0.7`
