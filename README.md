@@ -21,11 +21,11 @@ Formula for Ultra Massive Zoruas
   - If XXL (`hn >= 1.5`)
     - `k = wn - hn`
     - `zhn = min(hn, 1.75)`
-    - `zwn = max(k + zhn, 1.75)`
+    - `zwn = zhn + max(k, 0)` - The `k` is at least 0 because some glitched XXL zoruas that should give very low weights (`k < 0`) have instead a fixed weight of `zwn = zhn`.
   - Otherwise (`hn < 1.5`)
     - `k = wn - hn^2`
     - `zhn = max(hn, 0.49)`
-    - `zwn = k + zhn^2`
+    - `zwn = zhn^2 + k` - Note: I've got no proves that the `k` is at least 0 in this case, but it could be.
 - `zh` - caught zorua height
 - `zw` - caught zorua weight
   - `zh = zhn * 0.7`
