@@ -1,13 +1,15 @@
-# Zorua
+# Ultra Massive Zoruas
 
-Formula for Ultra Massive Zoruas
+Formula for calculating the sizes of Ultra Massive Zoruas.
+
+It depends on the average size of your buddy species and the actual size of the zorua instance spawning in the wild (all wild pokemon instances have a regular size, including zorua even though it's disguised as your buddy).
 
 ### INPUT DATA
 
 - `bh` - buddy species avg height
 - `bw` - buddy species avg height
-- `h` - wild zorua height == wild buddy height
-- `w` - wild zorua weight == wild buddy weight
+- `h` - wild zorua height = wild buddy height
+- `w` - wild zorua weight = wild buddy weight
 
 ### FORMULA
 
@@ -15,7 +17,7 @@ Formula for Ultra Massive Zoruas
 - `wn` - normalized wild buddy weight
   - `hn = h / bh`
   - `wn = w / bw`
-- `k` - mass index (shared between wild zorua/buddy and caught zorua)
+- `k` - mass index (shared between wild buddy and caught zorua)
 - `zhn` - normalized caught zorua height
 - `zwn` - normalized caught zorua weight
   - If XXL (`hn >= 1.5`)
