@@ -253,10 +253,27 @@ Zoruas caught while it was disguised as your buddy. Here the stats are also rero
 
 ## Testing
 
-**[WIP]** In this section, we will analyse the tagged Zoruas using our glitched Zorua size formula to see if there are any relationships between same wild Zorua instances.
+In this section, we will analyse the tagged Zoruas using our glitched Zorua size formula to see if there are any relationships between same wild Zorua instances.
+
+### Background
+
+We know that normal wild Pokemon share most stats between Trainers catching the same instance: They will have the same IVs, Level and CP. However, the size are different for each Trainer. Still there's some hidden relationship between those different sizes. First, we need to know how the sizes are generates for a Pokemon:
+
+For any Pokemon, the game first generates the values that we know as *normalized weight* and *normalized height*. These values are independent from the species (well, not really, but that's another topic) and generally ranges around the value `1`. Then these two values are multiplied respectively by the average weight and height of the Pokemon's species to provide a more appropriate size for it. What's interesting is how these two values are generated. They are not chosen randomly from a range of values, instead, they made that the height is random but they weight depend on the height to provide more realistic sizes. Furthermore, instead of making the height and weight proportional, they even added some random offset to the weight making it even more realistic, so you could have a Pokemon slightly smaller but a bit heavier than another one. This offset is what I like to call *mass index*. So at the end, what the game does is generate a random *normalized height* and *mass index* for each Pokemon, calculate the *normalized weight* and finally calculate the real Pokemon size.
+
+This was explained for a reason. Previously it was mentioned that one same wild Pokemon instance will have different sizes for each Trainer catching it, but these sizes are not that different. The *normalized height* is different for each Trainer but the *mass index* is the same for all of them. Because the *normalized weight* depends on both values, it's also different for each Trainers and then all their Zoruas will have different weights and heights. At the end the *mass index* is still shared like the IVs and Level.
+
+Zorua is a special Pokemon, because it disguises as your buddy and when caught its IVs and Level are rerolled so the Zorua you obtain does not have the same CP as during the encounter, which means the stats of a wild Zorua is not shared between Trainers. Then, the objectives of these tests are:
+
+- Proving if the *mass index* is **not rerolled** after catching a Zorua, which means it's still shared for all Trainers.
+- Prove for each group of same tag Zoruas we caught if the formula explains their sizes by using a common *mass index* value.
+
+### Procedure
+
+Testing will be very simple, for each group of same tag Zoruas (same instance) we will calculate their *mass index* range and check if they fit. The *mass index* is a value that ranges from `-0.5` to `+0.5` with mean on `0.0` but it's not linearly distributed in that range, it's normally distributed. This means it's much more likely to have Pokemons with *mass index* closer to `0.0` than closer to `±0.5`. So having two random Pokemon with *mass index* ranges that fit but are close to `0.0` is very common so that actually does not provide valuable information. But two random Pokemon with *mass index* ranges far from `0.0` that fit is extremely unlikely, so if a pair of same tag Zoruas satisfy this condition, it's 99% sure they share the same exact *mass index* value.
 
 Formulas used for the testing, made by reversing the size formula:
-- `fk`: Calculates the mass index of any pokemon, given its size and the average species size.
+- `fk`: Calculates the mass index of any Pokemon, given its size and the average species size.
 - `fz`: Calculates the possible mass index range for a normal Zorua (not glitched).
 - `fx`: Calculates the possible mass index range for a glitched Zorua, given its size and your buddy's average species size.
 
@@ -266,7 +283,7 @@ def fk(w, h, aw, ah):
   nh = h / ah
   if nh > 1.5:
     print("Warning! XXL Zorua size")
-	return nw - nh
+    return nw - nh
   return nw - nh**2
 
 def fz(w, h):
@@ -279,3 +296,182 @@ def fx(w, h, bw, bh):
   kMax = fk(w + 0.005, h - 0.005, 156.25 / bw, 0.49 / bh)
   return (kMin, kMax)
 ```
+
+### Calculations
+
+#### Zoruas hand catch tests
+
+These caught Zoruas share the same stats among all Trainers so its expected for them to share *mass index* too. The Zoruas tagged as `Zxx` are the ones collected specifically for this test.
+
+- Tag: Z1 -> Ranges fit: `(0.03502653061224459, 0.05786734693877549)`
+  - A: `fz(18.22, 0.83) = (0.03429183673469405, 0.06896938775510164)`
+  - B: `fz(8.02, 0.54)  = (0.03502653061224459, 0.05786734693877549)`
+- Tag: Z2 -> Ranges fit: `(-0.0037000000000002586, 0.01706734693877543)`
+  - A: `fz(16.49, 0.80) = (-0.0037000000000002586, 0.029753061224489175)`
+  - B: `fz(7.51, 0.54)  = (-0.0057734693877552480, 0.017067346938775430)`
+- Tag: Z3 -> Ranges fit: `(-0.03599387755102024, -0.015504081632653044)`
+  - A: `fz(17.77, 0.84) = (-0.03599387755102024, -0.0009081632653060723)`
+  - B: `fz(13.21, 0.73) = (-0.04610000000000003, -0.0155040816326530440)`
+- Tag: Z4 -> Ranges fit: `(-0.058508163265305946, -0.03770816326530624)`
+  - A: `fz(9.81, 0.64)  = (-0.064630612244898080, -0.037708163265306240)`
+  - B: `fz(17.06, 0.83) = (-0.058508163265305946, -0.023830612244898353)`
+- Tag: Z5 -> Ranges fit: `(-0.023046938775510784, -0.0009897959183673422)`
+  - A: `fz(15.84, 0.79) = (-0.023046938775510784,  0.0099979591836734100)`
+  - B: `fz(9.32, 0.61)  = (-0.026687755102041022, -0.0009897959183673422)`
+- Tag: Z6 -> Ranges fit: `(-0.0889734693877553, -0.06613265306122451)`
+  - A: `fz(11.54, 0.70) = (-0.09153673469387757, -0.06216530612244908)`
+  - B: `fz(6.47, 0.54)  = (-0.08897346938775530, -0.06613265306122451)`
+- Tag: Z7 -> Ranges fit: `(-0.11710408163265329, -0.10316122448979603)`
+  - A: `fz(11.95, 0.72) = (-0.11710408163265329, -0.08691632653061199)`
+  - B: `fz(9.65, 0.66)  = (-0.13090000000000013, -0.10316122448979603)`
+
+#### Normal hand catch tests
+
+These caught Zoruas have rerolled stats, so these tests serve as a prove that the *mass index* is still shared among players. The Zoruas tagged as `Nxx` are the ones collected specifically for this test.
+
+- Tag: N1 -> Ranges fit: `(0.11550000000000016, 0.14211224489795904)`
+  - A: `fz(20.98, 0.87) = (0.11550000000000016, 0.15181020408163248)`
+  - B: `fz(20.42, 0.86) = (0.10621020408163284, 0.14211224489795904)`
+- Tag: N2 -> Ranges fit: `(-7.551020408175235e-05, 0.001981632653061116)`
+  - A: `fz(4.00, 0.40) = (-0.01514489795918372300, 0.0019816326530611160)`
+  - B: `fz(5.52, 0.46) = (-0.00007551020408175235, 0.0194999999999999060)`
+- Tag: N3 -> Ranges fit: `(0.08989999999999987, 0.10270000000000024)`
+  - A: `fz(10.31, 0.60) = (0.07741020408163257, 0.10270000000000024)`
+  - B: `fz(12.41, 0.66) = (0.08989999999999987, 0.11763877551020396)`
+- Tag: N4 -> Ranges fit: `(-0.08316122448979613, -0.06316122448979633)`
+  - A: `fz(9.91, 0.65)  = (-0.08316122448979613, -0.05583061224489794)`
+  - B: `fz(16.15, 0.82) = (-0.09743061224489824, -0.06316122448979633)`
+- Tag: N5 -> Ranges fit: `(-0.06799387755102004, -0.04737346938775522)`
+  - A: `fz(17.37, 0.84) = (-0.06799387755102004, -0.03290816326530610)`
+  - B: `fz(6.98, 0.55)  = (-0.07062244897959191, -0.04737346938775522)`
+- Tag: N6 -> Ranges fit: `(0.025034693877550862, 0.04069183673469379)`
+  - A: `fz(18.29, 0.84) = (0.0056061224489798445, 0.04069183673469379)`
+  - B: `fz(12.64, 0.69) = (0.0250346938775508620, 0.05399795918367356)`
+- Tag: N7 -> Ranges fit: `(-0.01062244897959197, 0.012626530612244724)`
+  - A: `fz(7.73, 0.55)  = (-0.010622448979591970, 0.012626530612244724)`
+  - B: `fz(10.46, 0.64) = (-0.012630612244898032, 0.014291836734693808)`
+- Tag: N8 -> Ranges fit: `(-0.04601836734693887, -0.021544897959183462)`
+  - A: `fz(15.45, 0.79) = (-0.05424693877551090, -0.021202040816326706)`
+  - B: `fz(8.16, 0.58)  = (-0.04601836734693887, -0.021544897959183462)`
+- Tag: N9 -> Ranges fit: `(-0.004630612244898136, 0.0053775510204080446)`
+  - A: `fz(10.56, 0.64) = (-0.004630612244898136, 0.0222918367346937040)`
+  - B: `fz(7.92, 0.56)  = (-0.018279591836734888, 0.0053775510204080446)`
+- Tag: N10 -> Ranges fit: `(0.2778999999999998, 0.3006102040816325)`
+  - A: `fz(14.76, 0.66) = (0.2778999999999998, 0.3056387755102039)`
+  - B: `fz(22.84, 0.87) = (0.2643000000000000, 0.3006102040816325)`
+- Tag: N11 -> Ranges fit: `(-0.13583061224489823, -0.11416530612244902)`
+  - A: `fz(13.89, 0.78) = (-0.14680204081632664, -0.11416530612244902)`
+  - B: `fz(15.67, 0.82) = (-0.13583061224489823, -0.10156122448979610)`
+- Tag: N12 -> Ranges fit: `(-0.1186877551020411, -0.09810000000000024)`
+  - A: `fz(5.80, 0.53) = (-0.12053265306122452, -0.09810000000000024)`
+  - B: `fz(8.17, 0.61) = (-0.11868775510204110, -0.09298979591836742)`
+- Tag: N13 -> Ranges fit: `(0.024006122448979816, 0.051891836734693886)`
+  - A: `fz(18.43, 0.84) = (0.016806122448979720, 0.051891836734693886)`
+  - B: `fz(18.52, 0.84) = (0.024006122448979816, 0.059091836734693980)`
+- Tag: N14 -> Ranges fit: `(0.15069999999999983, 0.17389999999999994)`
+  - A: `fz(13.45, 0.67) = (0.14575306122448940, 0.17389999999999994)`
+  - B: `fz(13.17, 0.66) = (0.15069999999999983, 0.17843877551020393)`
+- Tag: N15 -> Ranges fit: `(-0.15873673469387795, -0.136761224489796)`
+  - A: `fz(9.23, 0.66)  = (-0.16450000000000010, -0.13676122448979600)`
+  - B: `fz(12.95, 0.76) = (-0.15873673469387795, -0.12691632653061258)`
+- Tag: N16 -> Ranges fit: `(-0.15538979591836743, -0.1451367346938779)`
+  - A: `fz(7.40, 0.60)  = (-0.15538979591836743, -0.13009999999999988)`
+  - B: `fz(13.11, 0.77) = (-0.17736530612244916, -0.14513673469387790)`
+- Tag: N17 -> Ranges fit: `(-0.29137346938775527, -0.2701)`
+  - A: `fz(3.94, 0.54) = (-0.29137346938775527, -0.26853265306122454)`
+  - B: `fz(7.90, 0.67) = (-0.29824693877551045, -0.27010000000000000)`
+- Tag: N18 -> Ranges fit: `(0.07923877551020375, 0.09821020408163239)`
+  - A: `fz(11.94, 0.65) = (0.079238775510203750, 0.10656938775510194)`
+  - B: `fz(20.31, 0.87) = (0.061900000000000066, 0.09821020408163239)`
+- Tag: N19 -> Ranges fit: `(-0.11743061224489815, -0.09196122448979616)`
+  - A: `fz(9.79, 0.66) = (-0.11970000000000025, -0.09196122448979616)`
+  - B: `fz(9.15, 0.64) = (-0.11743061224489815, -0.09050816326530631)`
+- Tag: N20 -> Ranges fit: `(-0.15377346938775527, -0.13093265306122454)`
+  - A: `fz(8.02, 0.62) = (-0.15599387755102057, -0.12988775510204098)`
+  - B: `fz(5.66, 0.54) = (-0.15377346938775527, -0.13093265306122454)`
+- Tag: N21 -> Ranges fit: `(-0.01633673469387742, -0.0017081632653059842)`
+  - A: `fz(12.48, 0.70) = (-0.01633673469387742,  0.0130346938775510730)`
+  - B: `fz(17.76, 0.84) = (-0.03679387755102015, -0.0017081632653059842)`
+
+#### Normal hand catch + Zorua hand catch tests
+
+One Zoruas of each pair have rerolled stats while the other one not, so these tests serve as a prove that the *mass index* is not rerolled.
+
+- Tag: Y1 -> Ranges fit: `(0.16023469387755074, 0.1816387755102038)`
+  - A: `fz(19.21, 0.82) = (0.14736938775510210, 0.1816387755102038)`
+  - B: `fz(17.33, 0.77) = (0.16023469387755074, 0.1924632653061220)`
+- Tag: Y3 -> Ranges fit: `(-0.07267959183673489, -0.05228775510204131)`
+  - A: `fz(17.99, 0.86) = (-0.08818979591836751, -0.05228775510204131)`
+  - B: `fz(7.24, 0.56)  = (-0.07267959183673489, -0.04902244897959196)`
+- Tag: Y4 -> Ranges fit: `(-0.1426877551020409, -0.12497346938775533)`
+  - A: `fz(16.87, 0.85) = (-0.14268775510204090, -0.10719387755102017)`
+  - B: `fz(6.01, 0.55)  = (-0.14822244897959197, -0.12497346938775533)`
+
+#### Zorua hand catch + Zorua Go Plus catch test
+
+This test is equivalent to the [mixed hand catch tests](#normal-hand-catch--zorua-hand-catch-tests).
+
+- Tag: Y2 -> Ranges fit: `(0.018063265306122567, 0.040169387755101926)`
+  - A: `fz(12.91, 0.70) = (0.018063265306122567, 0.047434693877551060)`
+  - B: `fz(11.11, 0.65) = (0.012838775510203737, 0.040169387755101926)`
+
+#### Normal hand catch + Normal Go Plus catch tests
+
+These tests serve as a prove that the Pokemon Go Plus does not make any weird things (like rerolling the *mass index*).
+
+- Tag: Y6 -> Ranges fit: `(0.06869183673469403, 0.10336938775510163)`
+  - A: `fz(18.65, 0.83)             = (0.06869183673469403, 0.10336938775510163)`
+  - B: `fx(1492.53, 0.35, 0.1, 1.3) = (0.06815956518117450, 0.11743710220741366)`
+- Tag: Y7 -> Ranges fit: `(0.07205510204081633, 0.09612040816326528)`
+  - A: `fz(9.34, 0.57)              = (0.07205510204081633, 0.09612040816326528)`
+  - B: `fx(1731.39, 0.38, 0.1, 1.3) = (0.06477007346938746, 0.11827085081216160)`
+- Tag: Y8 -> Ranges fit: `(0.10270000000000001, 0.11459487846730565)`
+  - A: `fz(15.07, 0.73)             = (0.10270000000000001, 0.13329591836734700)`
+  - B: `fx(1983.00, 0.41, 0.1, 1.3) = (0.05687086080799664, 0.11459487846730565)`
+- Tag: Y9 -> Ranges fit: `(-0.1433897959183672, -0.13305643481882545)`
+  - A: `fz(17.30, 0.86)             = (-0.14338979591836720, -0.10748775510204100)`
+  - B: `fx(1178.12, 0.36, 0.1, 1.3) = (-0.18374171861724287, -0.13305643481882545)`
+- Tag: Y14 -> Ranges fit: `(-0.24799387755102043, -0.2174236977925864)`
+  - A: `fz(15.12, 0.84)            = (-0.24799387755102043, -0.21290816326530604)`
+  - B: `fx(969.31, 0.35, 0.1, 1.3) = (-0.26670123481882546, -0.21742369779258640)`
+- Tag: Y99 -> Ranges fit: `(-0.03145501674302409, -0.016075510204081933)`
+  - A: `fx(3461.70, 0.56, 0.1, 1.3) = (-0.031455016743024090,  0.047385202498957835)`
+  - C: `fz(23.06, 0.96)             = (-0.056059183673469404, -0.016075510204081933)`
+  - D: `fz(26.93, 1.03)             = (-0.032173469387755560,  0.010667346938774358)`
+- Tag: YX8 -> Ranges fit: `(-0.16076913286130767, -0.15104693877551045)`
+  - A: `fx(9.41, 0.61, 23.5, 1.0) = (-0.16076913286130767, -0.10845297126197373)`
+  - B: `fz(9.73, 0.68)            = (-0.17960204081632690, -0.15104693877551045)`
+
+#### Normal Go Plus catch tests
+
+These tests serve as the definitive proof of the formula.
+
+> Sylveon (1) vs Sylveon (2)
+
+- Tag: YX7 -> Ranges fit: (-0.10949289795918371, -0.0849891211995002)
+  - A: `fx(4.67, 0.44, 23.5, 1.0) = (-0.12314451645147850, -0.08498912119950020)`
+  - B: `fx(5.01, 0.45, 23.5, 1.0) = (-0.10949289795918371, -0.07050451645147848)`
+- Tag: YX9 -> Ranges fit: (0.15294338025822585, 0.18841440066638948)
+  - A: `fx(8.31, 0.51, 23.5, 1.0) = (0.14442810162432318, 0.18841440066638948)`
+  - B: `fx(7.27, 0.47, 23.5, 1.0) = (0.15294338025822585, 0.19359773427738458)`
+
+> Gastly (1) vs Gastly (2)
+
+- Tag: Y11 -> Ranges fit: `(0.12024548138275726, 0.17093076518117445)`
+  - A: `fx(1653.10, 0.36, 0.1, 1.3) = (0.12024548138275726, 0.17093076518117445)`
+  - B: `fx(2072.14, 0.41, 0.1, 1.3) = (0.11392046080799645, 0.17164447846730546)`
+- Tag: Y12 -> Ranges fit: `(0.0340925224489792, 0.06217887846730563)`
+  - A: `fx(2330.14, 0.45, 0.1, 1.3) = (0.034092522448979200, 0.09744752719700123)`
+  - B: `fx(1901.10, 0.41, 0.1, 1.3) = (0.004454860807996619, 0.06217887846730563)`
+- Tag: Y13 -> Ranges fit: `(-0.07186912153269498, -0.01555285064556422)`
+  - A: `fx(1871.61, 0.42, 0.1, 1.3) = (-0.07354410362349051, -0.014412339192003243)`
+  - B: `fx(1691.66, 0.40, 0.1, 1.3) = (-0.07186912153269498, -0.015552850645564220)`
+- Tag: Y15 -> Ranges fit: `(-0.3164932348188254, -0.26850005064556426)`
+  - A: `fx(1296.43, 0.40, 0.1, 1.3) = (-0.3248163215326949, -0.26850005064556426)`
+  - B: `fx(891.51, 0.35, 0.1, 1.3)  = (-0.3164932348188254, -0.26721569779258636)`
+- Tag: Y16 -> Ranges fit: `(-0.09250272153269501, -0.05354382907122024)`
+  - A: `fx(1659.42, 0.40, 0.1, 1.3) = (-0.09250272153269501, -0.03618645064556425)`
+  - B: `fx(2294.38, 0.47, 0.1, 1.3) = (-0.11971432736359833, -0.05354382907122024)`
+- Tag: Y17 -> Ranges fit: `(0.03764977092877975, 0.07275349637650974)`
+  - A: `fx(2436.88, 0.46, 0.1, 1.3) = (0.037649770928779750, 0.10241252244897936)`
+  - B: `fx(2100.19, 0.43, 0.1, 1.3) = (0.012213985172844666, 0.07275349637650974)`
