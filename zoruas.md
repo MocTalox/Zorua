@@ -59,10 +59,10 @@ Zoruas caught while it was disguised as your buddy. Stats like IVs and Level are
 - ` 9.34kg / 0.57m` (Tag: Y7, Ref: A)
 - `15.07kg / 0.73m` (Tag: Y8, Ref: A)
 - `17.30kg / 0.86m` (Tag: Y9, Ref: A)
-- ` 6.11kg / 0.53m` (Tag: Y10, Ref: A)
 - `15.12kg / 0.84m` (Tag: Y14, Ref: A)
 - `23.06kg / 0.96m` (Tag: Y99, Ref: C)
 - `26.93kg / 1.03m` (Tag: Y99, Ref: D)
+- ` 9.73kg / 0.68m` (Tag: YX8, Ref: B)
 
 ### Zorua hand catch
 
@@ -130,12 +130,10 @@ Zoruas caught while it was disguised as your buddy. Here the stats are also rero
 >
 > Average species size: `0.1kg / 1.3m`
 
-- `1947.55kg / 0.45m` (Tag: Y5, Ref: B)
 - `1492.53kg / 0.35m` (Tag: Y6, Ref: B)
 - `1731.39kg / 0.38m` (Tag: Y7, Ref: B)
 - `1983.00kg / 0.41m` (Tag: Y8, Ref: B)
 - `1178.12kg / 0.36m` (Tag: Y9, Ref: B)
-- `1050.10kg / 0.34m` (Tag: Y10, Ref: B)
 - `2072.14kg / 0.41m` (Tag: Y11, Ref: B)
 - `1901.10kg / 0.41m` (Tag: Y12, Ref: B)
 - `1691.66kg / 0.40m` (Tag: Y13, Ref: B)
@@ -143,10 +141,12 @@ Zoruas caught while it was disguised as your buddy. Here the stats are also rero
 - ` 891.51kg / 0.35m` (Tag: Y15, Ref: B)
 - `2294.38kg / 0.47m` (Tag: Y16, Ref: B)
 - `2100.19kg / 0.43m` (Tag: Y17, Ref: B)
+- `1947.55kg / 0.45m` (Tag: XY5, Ref: B)
 - `1390.91kg / 0.36m` (Tag: X10, Ref: B)
 - `1673.59kg / 0.34m` (Tag: X11, Ref: B)
 - ` 964.59kg / 0.34m` (Tag: X12, Ref: B)
 - ` 977.57kg / 0.34m` (Tag: X13, Ref: B)
+- `1050.10kg / 0.34m`
 - `1170.34kg / 0.36m`
 - `1771.19kg / 0.37m`
 - `1805.69kg / 0.44m`
@@ -206,7 +206,7 @@ Zoruas caught while it was disguised as your buddy. Here the stats are also rero
 >
 > Average species size: `0.3kg / 0.3m`
 
-- ` 597.29kg / 1.23m` (Tag: Y5, Ref: A)
+- ` 597.29kg / 1.23m` (Tag: XY5, Ref: A)
 - ` 371.39kg / 1.23m`
 - ` 608.54kg / 1.23m`
 - ` 480.02kg / 1.23m`
@@ -229,7 +229,6 @@ Zoruas caught while it was disguised as your buddy. Here the stats are also rero
 > Average species size: `23.5kg / 1.0m`
 
 - ` 5.01kg / 0.45m` (Tag: YX7, Ref: B)
-- ` 9.73kg / 0.68m` (Tag: YX8, Ref: B)
 - ` 7.27kg / 0.47m` (Tag: YX9, Ref: B)
 - ` 5.08kg / 0.47m`
 - ` 3.85kg / 0.34m`
