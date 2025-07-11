@@ -301,7 +301,7 @@ def fx(w, h, bw, bh):
 
 #### Zoruas hand catch tests
 
-These caught Zoruas share the same stats among all Trainers so its expected for them to share *mass index* too. The Zoruas tagged as `Zxx` are the ones collected specifically for this test.
+These caught Zoruas share the same stats among all Trainers so it's expected for them to share *mass index* too. The Zoruas tagged as `Zxx` are the ones collected specifically for this test.
 
 - Tag: Z1 -> Ranges fit: `(0.03502653061224459, 0.05786734693877549)`
   - A: `fz(18.22, 0.83) = (0.03429183673469405, 0.06896938775510164)`
@@ -327,7 +327,7 @@ These caught Zoruas share the same stats among all Trainers so its expected for 
 
 #### Normal hand catch tests
 
-These caught Zoruas have rerolled stats, so these tests serve as a prove that the *mass index* is still shared among players. The Zoruas tagged as `Nxx` are the ones collected specifically for this test.
+These caught Zoruas have rerolled stats, so these tests serve as a proof that the *mass index* is still shared among players. The Zoruas tagged as `Nxx` are the ones collected specifically for this test.
 
 - Tag: N1 -> Ranges fit: `(0.11550000000000016, 0.14211224489795904)`
   - A: `fz(20.98, 0.87) = (0.11550000000000016, 0.15181020408163248)`
@@ -395,7 +395,7 @@ These caught Zoruas have rerolled stats, so these tests serve as a prove that th
 
 #### Normal hand catch + Zorua hand catch tests
 
-One Zoruas of each pair have rerolled stats while the other one not, so these tests serve as a prove that the *mass index* is not rerolled.
+One Zoruas of each pair have rerolled stats while the other one not, so these tests serve as a proof that the *mass index* is not rerolled.
 
 - Tag: Y1 -> Ranges fit: `(0.16023469387755074, 0.1816387755102038)`
   - A: `fz(19.21, 0.82) = (0.14736938775510210, 0.1816387755102038)`
@@ -417,7 +417,7 @@ This test is equivalent to the [mixed hand catch tests](#normal-hand-catch--zoru
 
 #### Normal hand catch + Normal Go Plus catch tests
 
-These tests serve as a prove that the Pokemon Go Plus does not make any weird things (like rerolling the *mass index*).
+These tests serve as a proof that the Pokemon Go Plus does not make any weird things (like rerolling the *mass index*).
 
 - Tag: Y6 -> Ranges fit: `(0.06869183673469403, 0.10336938775510163)`
   - A: `fz(18.65, 0.83)             = (0.06869183673469403, 0.10336938775510163)`
