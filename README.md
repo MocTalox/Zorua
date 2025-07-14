@@ -25,7 +25,7 @@ It depends on the average size of your buddy species and the actual size of the 
 - `zhn` - normalized caught zorua height
 - `zwn` - normalized caught zorua weight
   - If wild buddy is XXL (`hn >= 1.5`)
-    - `zhn = min(hn, 1.75)`
+    - `zhn = min(hn, 1.75)` - There is one example that proves this is wrong and should instead be directly `zhn = 1.75`
     - `zwn = zhn + max(k, 0)` - The `k` is at least 0 because some glitched XXL zoruas that should give very low weights (`k < 0`) have instead a fixed weight of `zwn = zhn`.
   - Otherwise (`hn < 1.5`)
     - `zhn = max(hn, 0.49)`
