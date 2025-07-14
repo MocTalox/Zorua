@@ -67,3 +67,9 @@ It depends on the average size of your buddy species and the actual size of the 
       - `zw = max(wn, hn) * 12.5`
     - If wild buddy is over XXL (`hn > 1.75`)
       - `zw = max(wn - hn, 0) * 12.5 + 21.875`
+
+### UNTESTED BRANCHES
+
+- *Wild zorua is not XXL and wild buddy is XXL*: Need to use a 0.3m to 0.6m buddy that fits `1.5 < spawnZoruaHei / avgBuddyHei < 1.75`. The best buddy heights would be 0.4m to 0.45m, to easily find zoruas that fit that condition.
+- *Wild zorua is XXL and wild buddy is under XXS*: Need too use a 2.5m or more buddy (guaranteed).
+- *Wild zorua is XXL and wild buddy is XXL*: Need too use a 0.7m buddy (guaranteed).
