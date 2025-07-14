@@ -18,16 +18,18 @@ It depends on the average size of your buddy species and the actual size of the 
   - `hn = h / bh`
   - `wn = w / bw`
 - `k` - mass index (shared between wild buddy and caught zorua)
+  - If wild zorua is XXL (`h / 0.7 >= 1.5` or `h >= 1.05`)
+    - `k = wn - hn`
+  - Otherwise (`h / 0.7 < 1.5` or `h < 1.05`)
+    - `k = wn - hn^2`
 - `zhn` - normalized caught zorua height
 - `zwn` - normalized caught zorua weight
-  - If XXL (`hn >= 1.5`)
-    - `k = wn - hn`
+  - If wild buddy is XXL (`hn >= 1.5`)
     - `zhn = min(hn, 1.75)`
     - `zwn = zhn + max(k, 0)` - The `k` is at least 0 because some glitched XXL zoruas that should give very low weights (`k < 0`) have instead a fixed weight of `zwn = zhn`.
   - Otherwise (`hn < 1.5`)
-    - `k = wn - hn^2`
     - `zhn = max(hn, 0.49)`
-    - `zwn = zhn^2 + k` - Note: I've got no proves that the `k` is at least 0 in this case, but it could be.
+    - `zwn = zhn^2 + k` - Note: seems here the `k` is not lower-capped at 0.
 - `zh` - caught zorua height
 - `zw` - caught zorua weight
   - `zh = zhn * 0.7`
@@ -40,16 +42,28 @@ It depends on the average size of your buddy species and the actual size of the 
   - `hn = h / bh`
   - `wn = w / bw`
 - `zh` - caught zorua height
+    - If wild buddy is under XXS (`hn < 0.49`)
+      - `zh = 0.343`
+    - If wild buddy is on range (`hn >= 0.49 && hn <= 1.75`)
+      - `zh = hn * 0.7`
+    - If wild buddy is over XXL (`hn > 1.75`)
+      - `zh = 1.225`
 - `zw` - caught zorua weight
-  - If undex XXS (`hn <= 0.49`)
-	- `zh = 0.343`
-    - `zw = (wn - hn ^ 2 + 0.49 ^ 2) * 12.5`
-  - If not XXL (`0.49 <= hn <= 1.5`)
-	- `zh = hn * 0.7`
-    - `zw = wn * 12.5`
-  - If normal XXL (`1.5 <= hn <= 1.75`)
-	- `zh = hn * 0.7`
-    - `zw = max(wn, hn) * 12.5`
-  - If over XXL (`hn >= 1.75`)
-	- `zh = 1.225`
-    - `zw = max(wn - hn + 1.75, 1.75) * 12.5`
+  - If wild zorua is not XXL (`h < 1.05`)
+    - If wild buddy is under XXS (`hn < 0.49`)
+      - `zw = (wn - hn^2) * 12.5 + 3.00125`
+    - If wild buddy is not XXL (`hn >= 0.49 && hn < 1.5`)
+      - `zw = wn * 12.5`
+    - If wild buddy is XXL (`hn >= 1.5 && hn <= 1.75`)
+      - `zw = max(wn + hn - hn^2, hn) * 12.5`
+    - If wild buddy is over XXL (`hn > 1.75`)
+      - `zw = max(wn - hn^2, 0) * 12.5 + 21.875`
+  - If wild zorua is XXL (`h >= 1.05`)
+    - If wild buddy is under XXS (`hn < 0.49`)
+      - `zw = (wn - hn) * 12.5 + 3.00125`
+    - If wild buddy is not XXL (`hn >= 0.49 && hn < 1.5`)
+      - `zw = (wn - hn + hn^2) * 12.5`
+    - If wild buddy is XXL (`hn >= 1.5 && hn <= 1.75`)
+      - `zw = max(wn, hn) * 12.5`
+    - If wild buddy is over XXL (`hn > 1.75`)
+      - `zw = max(wn - hn, 0) * 12.5 + 21.875`
