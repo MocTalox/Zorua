@@ -4,6 +4,8 @@ Formula for calculating the sizes of Ultra Massive Zoruas.
 
 It depends on the average size of your buddy species and the actual size of the zorua instance spawning in the wild (all wild pokemon instances have a regular size, including zorua even though it's disguised as your buddy).
 
+*Note: I'm aware I take for granted many things and poorly explain others. My main focus is documenting the important things (the formula) and once I have time I'll improve the rest.*
+
 ### INPUT DATA
 
 - `bh` - buddy species avg height
