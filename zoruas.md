@@ -2,6 +2,8 @@
 
 Collection of many of our caught Zoruas sizes. Some of them have tags, which relates them with other Zoruas. The Zoruas that have the same tag are caught from the same wild spawn instance, so they may have a strong relationship with each other (explained on the [Testing section](#testing)). The ref value is just for us to remember whose Zorua value is each.
 
+*Note: This analysis was done to prove the actual buddy size is not taken into account but just the species average size. Further tests (I still need to include them) prove the exactitude of the formula (thats why I recently updated it, to fit some concrete scenarios, leaving the general case as before).*
+
 ## Hand catch
 
 Zoruas caught by manually throwing the pokeball to them. The glitch does not happen in this cases so expect all values to be normal.
